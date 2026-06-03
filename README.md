@@ -4,7 +4,7 @@ ONTOBRAS 2026 OntoLOASx paper
 Documents available:
 - OntoLOASx.ttl: OntoOntoLOASx ontology available in turtle format.
 - create_ontoloasx.cypher: Cypher script for creating the OntoLOASx ontology in Neo4j Desktop.
-- slr_dataset.xlsx: Systematic literature review sample dataset coded from [1].
+- slr_dataset.txt: Systematic literature review sample dataset coded from [1], provided as a tab-delimited TXT file.
 - create_ontoloasx_instances.cypher: Cypher script for creating the OntoLOASx-based sample knowledge graph in Neo4j Desktop.
 - sample_knowledge_graph_analyses.pdf: Document describing the steps for analyzing the sample knowledge graph in Neo4j Browser.
 
