@@ -1,3 +1,10 @@
+MERGE (ResearchQuestion_1:ResearchQuestion {id:"ResearchQuestion_1"})
+SET ResearchQuestion_1.description = "The effects of group singing on health-related quality of life among adult amateur singers with chronic health conditions";
+MERGE (Problem_1:Problem {id:"Problem_1"})
+SET Problem_1.description = "Health-related quality of life";
+MATCH (o1:ResearchQuestion {id: "ResearchQuestion_1"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:investigates]->(o2);
 MERGE (Study_15:Study {id:"Study_15"})
 SET Study_15.title = "Singing teaching as a therapy for chronic respiratory disease: a randomised controlled trial and qualitative evaluation";
 MERGE (Solution_15:Solution {id:"Solution_15"});
@@ -54,49 +61,52 @@ SET limitation_15_4.description = "no power calculation"
 SET limitation_15_4.addedInReview = false;
 MATCH (o1:Study {id: "Study_15"})
 MATCH (o2:Solution {id: "Solution_15"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_15"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:Context {id: "context_chronic_obstructive_pulmonary_disease"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:SolutionElement {id: "singing_workshops"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:SolutionElement {id: "physical_domain"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:SolutionElement {id: "reduced_chronic_obstructive_pulmonary_disease_symptoms"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:SolutionElement {id: "increased_breath_control"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:SolutionElement {id: "increased_function"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:SolutionElement {id: "improved_mood"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:SolutionElement {id: "feeling_of_community"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:SolutionElement {id: "social_support"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:SolutionElement {id: "sense_of_achievement"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:Limitation {id: "limitation_15_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:Limitation {id: "limitation_15_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:Limitation {id: "limitation_15_3"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_15"})
 MATCH (o2:Limitation {id: "limitation_15_4"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_16:Study {id:"Study_16"})
 SET Study_16.title = "Singing classes for chronic obstructive pulmonary disease: a randomized controlled trial";
 MERGE (Solution_16:Solution {id:"Solution_16"});
@@ -149,46 +159,49 @@ SET limitation_16_4.description = "qualitative data analysis not detailed"
 SET limitation_16_4.addedInReview = false;
 MATCH (o1:Study {id: "Study_16"})
 MATCH (o2:Solution {id: "Solution_16"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_16"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:Context {id: "context_chronic_obstructive_pulmonary_disease"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:SolutionElement {id: "group_singing"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:SolutionElement {id: "physical_domain"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:SolutionElement {id: "increased_breath_control"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:SolutionElement {id: "improved_mood"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:SolutionElement {id: "sense_of_community"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:SolutionElement {id: "social_support"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:SolutionElement {id: "sense_of_achievement"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:SolutionElement {id: "efficacy"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:Limitation {id: "limitation_16_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:Limitation {id: "limitation_16_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:Limitation {id: "limitation_16_3"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_16"})
 MATCH (o2:Limitation {id: "limitation_16_4"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_17:Study {id:"Study_17"})
 SET Study_17.title = "Effects of music-based therapy on distress following knee arthroplasty";
 MERGE (Solution_17:Solution {id:"Solution_17"});
@@ -211,22 +224,25 @@ SET limitation_17_2.description = "homogeneous group"
 SET limitation_17_2.addedInReview = false;
 MATCH (o1:Study {id: "Study_17"})
 MATCH (o2:Solution {id: "Solution_17"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_17"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_17"})
 MATCH (o2:Context {id: "context_total_knee_arthroscopy"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_17"})
 MATCH (o2:SolutionElement {id: "choral_singing"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_17"})
 MATCH (o2:SolutionElement {id: "hospital_anxiety_and_depression_scale"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_17"})
 MATCH (o2:Limitation {id: "limitation_17_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_17"})
 MATCH (o2:Limitation {id: "limitation_17_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_18:Study {id:"Study_18"})
 SET Study_18.title = "Effects of singing classes on pulmonary function and quality of life of COPD patients";
 MERGE (Solution_18:Solution {id:"Solution_18"});
@@ -255,28 +271,31 @@ SET limitation_18_3.description = "blinding not stated"
 SET limitation_18_3.addedInReview = false;
 MATCH (o1:Study {id: "Study_18"})
 MATCH (o2:Solution {id: "Solution_18"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_18"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_18"})
 MATCH (o2:Context {id: "context_chronic_obstructive_pulmonary_disease"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_18"})
 MATCH (o2:SolutionElement {id: "folk_songs"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_18"})
 MATCH (o2:SolutionElement {id: "respiratory_exercise"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_18"})
 MATCH (o2:SolutionElement {id: "respiratory_exercise"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_18"})
 MATCH (o2:Limitation {id: "limitation_18_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_18"})
 MATCH (o2:Limitation {id: "limitation_18_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_18"})
 MATCH (o2:Limitation {id: "limitation_18_3"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_19:Study {id:"Study_19"})
 SET Study_19.title = "The impact of group singing on mood, coping and perceived pain in chronic pain patients attending a multidisciplinary pain clinic";
 MERGE (Solution_19:Solution {id:"Solution_19"});
@@ -294,19 +313,22 @@ SET limitation_19_2.description = "blinding not stated"
 SET limitation_19_2.addedInReview = false;
 MATCH (o1:Study {id: "Study_19"})
 MATCH (o2:Solution {id: "Solution_19"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_19"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_19"})
 MATCH (o2:Context {id: "context_chronic_pain"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_19"})
 MATCH (o2:SolutionElement {id: "lively_tempo"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_19"})
 MATCH (o2:Limitation {id: "limitation_19_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_19"})
 MATCH (o2:Limitation {id: "limitation_19_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_20:Study {id:"Study_20"})
 SET Study_20.title = "Effect of singing on respiratory function, voice, and mood after quadriplegia: a randomized controlled trial";
 MERGE (Solution_20:Solution {id:"Solution_20"});
@@ -324,19 +346,22 @@ SET limitation_20_2.description = "single blind"
 SET limitation_20_2.addedInReview = false;
 MATCH (o1:Study {id: "Study_20"})
 MATCH (o2:Solution {id: "Solution_20"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_20"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_20"})
 MATCH (o2:Context {id: "context_quadriplegics"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_20"})
 MATCH (o2:SolutionElement {id: "group_singing"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_20"})
 MATCH (o2:Limitation {id: "limitation_20_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_20"})
 MATCH (o2:Limitation {id: "limitation_20_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_21:Study {id:"Study_21"})
 SET Study_21.title = "Therapeutic singing as an adjunct for pulmonary rehabilitation participants with COPD: Outcomes of a Feasibility Study";
 MERGE (Solution_21:Solution {id:"Solution_21"});
@@ -360,25 +385,28 @@ SET limitation_21_4.description = "self-selected groups"
 SET limitation_21_4.addedInReview = false;
 MATCH (o1:Study {id: "Study_21"})
 MATCH (o2:Solution {id: "Solution_21"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_21"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_21"})
 MATCH (o2:Context {id: "context_chronic_obstructive_pulmonary_disease_advanced"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_21"})
 MATCH (o2:SolutionElement {id: "group_singing"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_21"})
 MATCH (o2:Limitation {id: "limitation_21_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_21"})
 MATCH (o2:Limitation {id: "limitation_21_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_21"})
 MATCH (o2:Limitation {id: "limitation_21_3"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_21"})
 MATCH (o2:Limitation {id: "limitation_21_4"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_22:Study {id:"Study_22"})
 SET Study_22.title = "A pilot investigation of quality of life and lung function following choral singing in cancer survivor sand their carers";
 MERGE (Solution_22:Solution {id:"Solution_22"});
@@ -431,46 +459,49 @@ SET limitation_22_4.description = "qualitative data analysis not detailed"
 SET limitation_22_4.addedInReview = false;
 MATCH (o1:Study {id: "Study_22"})
 MATCH (o2:Solution {id: "Solution_22"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_22"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:Context {id: "context_cancer"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:SolutionElement {id: "intervention_not_available"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:SolutionElement {id: "health_related_quality_of_life"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:SolutionElement {id: "improved_mood"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:SolutionElement {id: "increased_confidence"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:SolutionElement {id: "increased_self_esteem"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:SolutionElement {id: "sense_of_belonging"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:SolutionElement {id: "opportunity_to_share_mutual_experiences"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:SolutionElement {id: "working_towards_a_goal"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:Limitation {id: "limitation_22_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:Limitation {id: "limitation_22_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:Limitation {id: "limitation_22_3"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_22"})
 MATCH (o2:Limitation {id: "limitation_22_4"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_23:Study {id:"Study_23"})
 SET Study_23.title = "A UK feasibility study on the value of singing for people with Chronic Obstructive Pulmonary Disease (COPD)";
 MERGE (Solution_23:Solution {id:"Solution_23"});
@@ -490,19 +521,22 @@ SET limitation_23_1.description = "no control"
 SET limitation_23_1.addedInReview = false;
 MATCH (o1:Study {id: "Study_23"})
 MATCH (o2:Solution {id: "Solution_23"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_23"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_23"})
 MATCH (o2:Context {id: "context_chronic_obstructive_pulmonary_disease"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_23"})
 MATCH (o2:SolutionElement {id: "intervention_not_available"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_23"})
 MATCH (o2:SolutionElement {id: "health_related_quality_of_life"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_23"})
 MATCH (o2:Limitation {id: "limitation_23_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_24:Study {id:"Study_24"})
 SET Study_24.title = "‘Stroke a Chord’: the effect of singing in a community choir on mood and social engagement for people living with aphasia following a stroke";
 MERGE (Solution_24:Solution {id:"Solution_24"});
@@ -552,43 +586,46 @@ SET limitation_24_3.description = "no statistical analysis"
 SET limitation_24_3.addedInReview = false;
 MATCH (o1:Study {id: "Study_24"})
 MATCH (o2:Solution {id: "Solution_24"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_24"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_24"})
 MATCH (o2:Context {id: "context_stroke"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_24"})
 MATCH (o2:SolutionElement {id: "community_choir"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_24"})
 MATCH (o2:SolutionElement {id: "mood"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_24"})
 MATCH (o2:SolutionElement {id: "increased_confidence"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_24"})
 MATCH (o2:SolutionElement {id: "improved_mood"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_24"})
 MATCH (o2:SolutionElement {id: "social_connection"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_24"})
 MATCH (o2:SolutionElement {id: "sense_of_belonging"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_24"})
 MATCH (o2:SolutionElement {id: "enjoyment"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_24"})
 MATCH (o2:SolutionElement {id: "improved_communication"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_24"})
 MATCH (o2:Limitation {id: "limitation_24_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_24"})
 MATCH (o2:Limitation {id: "limitation_24_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_24"})
 MATCH (o2:Limitation {id: "limitation_24_3"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_25:Study {id:"Study_25"})
 SET Study_25.title = "The effect of group music therapy on mood, speech, and singing in individuals with Parkinson’s disease—a feasibility study";
 MERGE (Solution_25:Solution {id:"Solution_25"});
@@ -609,22 +646,25 @@ SET limitation_25_3.description = "small numbers"
 SET limitation_25_3.addedInReview = false;
 MATCH (o1:Study {id: "Study_25"})
 MATCH (o2:Solution {id: "Solution_25"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_25"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_25"})
 MATCH (o2:Context {id: "context_parkinson_s_disease"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_25"})
 MATCH (o2:SolutionElement {id: "group_singing"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_25"})
 MATCH (o2:Limitation {id: "limitation_25_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_25"})
 MATCH (o2:Limitation {id: "limitation_25_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_25"})
 MATCH (o2:Limitation {id: "limitation_25_3"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_26:Study {id:"Study_26"})
 SET Study_26.title = "Singing in groups for Parkinson’s disease (SING-PD): a pilot study of group singing therapy for PD-related voice speech disorders";
 MERGE (Solution_26:Solution {id:"Solution_26"});
@@ -642,19 +682,22 @@ SET limitation_26_2.description = "no control"
 SET limitation_26_2.addedInReview = false;
 MATCH (o1:Study {id: "Study_26"})
 MATCH (o2:Solution {id: "Solution_26"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_26"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_26"})
 MATCH (o2:Context {id: "context_parkinson_s_disease"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_26"})
 MATCH (o2:SolutionElement {id: "intervention_not_available"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_26"})
 MATCH (o2:Limitation {id: "limitation_26_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_26"})
 MATCH (o2:Limitation {id: "limitation_26_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_27:Study {id:"Study_27"})
 SET Study_27.title = "Does a ‘Singing Together Group’ improve the quality of life of people with a dementia and their carers? A pilot evaluation study";
 MERGE (Solution_27:Solution {id:"Solution_27"});
@@ -702,43 +745,46 @@ SET limitation_27_4.description = "researcher/participant relationship not consi
 SET limitation_27_4.addedInReview = false;
 MATCH (o1:Study {id: "Study_27"})
 MATCH (o2:Solution {id: "Solution_27"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_27"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_27"})
 MATCH (o2:Context {id: "context_dementia"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_27"})
 MATCH (o2:SolutionElement {id: "group_singing"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_27"})
 MATCH (o2:SolutionElement {id: "fulfilment"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_27"})
 MATCH (o2:SolutionElement {id: "enjoyment"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_27"})
 MATCH (o2:SolutionElement {id: "opportunity_to_do_something_new"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_27"})
 MATCH (o2:SolutionElement {id: "oppportunity_to_learn"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_27"})
 MATCH (o2:SolutionElement {id: "social_inclusion"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_27"})
 MATCH (o2:SolutionElement {id: "enhanced_emotions"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_27"})
 MATCH (o2:Limitation {id: "limitation_27_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_27"})
 MATCH (o2:Limitation {id: "limitation_27_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_27"})
 MATCH (o2:Limitation {id: "limitation_27_3"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_27"})
 MATCH (o2:Limitation {id: "limitation_27_4"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_33:Study {id:"Study_33"})
 SET Study_33.title = "Commuity mental health music therapy: a consumer-initiated song-based paradigm";
 MERGE (Solution_33:Solution {id:"Solution_33"});
@@ -813,61 +859,64 @@ SET limitation_33_1.description = "researcher/participant relationship not consi
 SET limitation_33_1.addedInReview = false;
 MATCH (o1:Study {id: "Study_33"})
 MATCH (o2:Solution {id: "Solution_33"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_33"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:Context {id: "context_adult_mental_health"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "song_based_music_therapy_programme"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "fun"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "relaxation"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "social_interaction"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "sense_of_belonging"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "focus"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "support"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "creativity"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "skill_development"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "structure"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "stability"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "mental_health_recovery"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "improved_mood"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "increased_confidence"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "increased_self_esteem"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:SolutionElement {id: "artistic_expression"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_33"})
 MATCH (o2:Limitation {id: "limitation_33_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_34:Study {id:"Study_34"})
 SET Study_34.title = "The significance of choral singing for sustaining psychological wellbeing: findings from a survey of choristers in England, Australia and Germany";
 MERGE (Solution_34:Solution {id:"Solution_34"});
@@ -905,34 +954,37 @@ SET limitation_34_2.description = "brief description of analysis"
 SET limitation_34_2.addedInReview = false;
 MATCH (o1:Study {id: "Study_34"})
 MATCH (o2:Solution {id: "Solution_34"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_34"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_34"})
 MATCH (o2:Context {id: "context_choral_societies"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_34"})
 MATCH (o2:SolutionElement {id: "improved_mood"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_34"})
 MATCH (o2:SolutionElement {id: "focused_attention"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_34"})
 MATCH (o2:SolutionElement {id: "deep_breathing"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_34"})
 MATCH (o2:SolutionElement {id: "social_support"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_34"})
 MATCH (o2:SolutionElement {id: "cognitive_stimulation"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_34"})
 MATCH (o2:SolutionElement {id: "opportunity_for_regular_commitment"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_34"})
 MATCH (o2:Limitation {id: "limitation_34_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_34"})
 MATCH (o2:Limitation {id: "limitation_34_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_35:Study {id:"Study_35"})
 SET Study_35.title = "Benefits of group singing for people with eating disorders: preliminary findings from a non-clinical study";
 MERGE (Solution_35:Solution {id:"Solution_35"});
@@ -995,52 +1047,55 @@ SET limitation_35_1.description = "researcher/participant relationship not consi
 SET limitation_35_1.addedInReview = false;
 MATCH (o1:Study {id: "Study_35"})
 MATCH (o2:Solution {id: "Solution_35"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_35"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:Context {id: "context_eating_disorders"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "singing_workshops"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "re_connection_with_bodily_sensations"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "relaxation"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "awareness_of_body"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "mental_engagement"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "helps_to_distance_from_problems"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "emotional_release"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "self_expression"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "increased_self_esteem"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "feeling_supported"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "healthy_social_interaction"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "reduced_stressed"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:SolutionElement {id: "feelings_of_empowerment"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_35"})
 MATCH (o2:Limitation {id: "limitation_35_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_36:Study {id:"Study_36"})
 SET Study_36.title = "‘Singing for the Brain’: reflections on the human capacity for music arising from a pilot study of group singing with Alzheimer’s patients";
 MERGE (Solution_36:Solution {id:"Solution_36"});
@@ -1078,34 +1133,37 @@ SET limitation_36_2.description = "lack of detail"
 SET limitation_36_2.addedInReview = false;
 MATCH (o1:Study {id: "Study_36"})
 MATCH (o2:Solution {id: "Solution_36"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_36"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_36"})
 MATCH (o2:Context {id: "context_alzheimer_s_disease"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_36"})
 MATCH (o2:SolutionElement {id: "singing_sessions"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_36"})
 MATCH (o2:SolutionElement {id: "participation"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_36"})
 MATCH (o2:SolutionElement {id: "increased_confidence"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_36"})
 MATCH (o2:SolutionElement {id: "social_interaction"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_36"})
 MATCH (o2:SolutionElement {id: "vitality"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_36"})
 MATCH (o2:SolutionElement {id: "improved_mood"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_36"})
 MATCH (o2:Limitation {id: "limitation_36_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_36"})
 MATCH (o2:Limitation {id: "limitation_36_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MERGE (Study_38:Study {id:"Study_38"})
 SET Study_38.title = "‘To be heard’: the social and mental health benefits of choir singing for disadvantaged adults";
 MERGE (Solution_38:Solution {id:"Solution_38"});
@@ -1167,49 +1225,52 @@ SET limitation_38_2.description = "researchers joined choir potentially influenc
 SET limitation_38_2.addedInReview = false;
 MATCH (o1:Study {id: "Study_38"})
 MATCH (o2:Solution {id: "Solution_38"})
-MERGE (o1)-[:PROPOSES]->(o2);
+MERGE (o1)-[:proposes]->(o2);
+MATCH (o1:Solution {id: "Solution_38"})
+MATCH (o2:Problem {id: "Problem_1"})
+MERGE (o1)-[:addresses]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:Context {id: "context_chronic_mental_illness"})
-MERGE (o1)-[:APPLIES_TO]->(o2);
+MERGE (o1)-[:appliesTo]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:SolutionElement {id: "choir_sessions"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:SolutionElement {id: "positive_emotions"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:SolutionElement {id: "positive_spiritual_experiences"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:SolutionElement {id: "improved_self_perception"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:SolutionElement {id: "increased_singing_ability"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:SolutionElement {id: "sense_of_belonging"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:SolutionElement {id: "acceptance"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:SolutionElement {id: "connection_with_local_community"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:SolutionElement {id: "increased_social_functioning"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:SolutionElement {id: "positive_health_benefits"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:SolutionElement {id: "routine"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:SolutionElement {id: "structure"})
-MERGE (o1)-[:HAS_ELEMENT]->(o2);
+MERGE (o1)-[:hasElement]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:Limitation {id: "limitation_38_1"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);
 MATCH (o1:Solution {id: "Solution_38"})
 MATCH (o2:Limitation {id: "limitation_38_2"})
-MERGE (o1)-[:HAS_LIMITATION]->(o2);
+MERGE (o1)-[:hasLimitation]->(o2);

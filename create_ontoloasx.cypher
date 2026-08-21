@@ -1,322 +1,199 @@
-// OntoLOASx - Cypher script for Neo4j Desktop
+CREATE CONSTRAINT ontology_iri_unique IF NOT EXISTS FOR (n:Ontology) REQUIRE n.iri IS UNIQUE;
+CREATE CONSTRAINT ontology_class_iri_unique IF NOT EXISTS FOR (n:OntologyClass) REQUIRE n.iri IS UNIQUE;
+CREATE CONSTRAINT object_property_iri_unique IF NOT EXISTS FOR (n:ObjectProperty) REQUIRE n.iri IS UNIQUE;
+CREATE CONSTRAINT data_property_iri_unique IF NOT EXISTS FOR (n:DataProperty) REQUIRE n.iri IS UNIQUE;
+CREATE CONSTRAINT datatype_iri_unique IF NOT EXISTS FOR (n:Datatype) REQUIRE n.iri IS UNIQUE;
+CREATE CONSTRAINT ontology_restriction_id_unique IF NOT EXISTS FOR (n:OntologyRestriction) REQUIRE n.id IS UNIQUE;
+CREATE CONSTRAINT research_question_uri_unique IF NOT EXISTS FOR (n:ResearchQuestion) REQUIRE n.uri IS UNIQUE;
+CREATE CONSTRAINT problem_uri_unique IF NOT EXISTS FOR (n:Problem) REQUIRE n.uri IS UNIQUE;
+CREATE CONSTRAINT study_uri_unique IF NOT EXISTS FOR (n:Study) REQUIRE n.uri IS UNIQUE;
+CREATE CONSTRAINT solution_uri_unique IF NOT EXISTS FOR (n:Solution) REQUIRE n.uri IS UNIQUE;
+CREATE CONSTRAINT context_uri_unique IF NOT EXISTS FOR (n:Context) REQUIRE n.uri IS UNIQUE;
+CREATE CONSTRAINT solution_element_uri_unique IF NOT EXISTS FOR (n:SolutionElement) REQUIRE n.uri IS UNIQUE;
+CREATE CONSTRAINT objective_uri_unique IF NOT EXISTS FOR (n:Objective) REQUIRE n.uri IS UNIQUE;
+CREATE CONSTRAINT limitation_uri_unique IF NOT EXISTS FOR (n:Limitation) REQUIRE n.uri IS UNIQUE;
+CREATE CONSTRAINT research_gap_uri_unique IF NOT EXISTS FOR (n:ResearchGap) REQUIRE n.uri IS UNIQUE;
 
-:use ontoloasx
+MERGE (ontoloasx:Ontology {iri: 'http://ontoloasx.org/ontoloasx'})
+SET ontoloasx.name = 'OntoLOASx',
+    ontoloasx.namespace = 'http://ontoloasx.org/ontoloasx#',
+    ontoloasx.sourceFile = 'OntoLOASx(4).owl';
 
-// Cleans existing ontology
-MATCH (n) WHERE n.ontology = 'OntoLOASx' DETACH DELETE n;
-MATCH (n {uri: 'http://ontoloasx.org/ontoloasx'}) DETACH DELETE n;
+MERGE (gufo:Ontology {iri: 'http://purl.org/nemo/gufo#'})
+SET gufo.name = 'gUFO',
+    gufo.namespace = 'http://purl.org/nemo/gufo#';
 
-// Unique constraints
-CREATE CONSTRAINT ontology_uri_unique IF NOT EXISTS
-FOR (n:Ontology) REQUIRE n.uri IS UNIQUE;
+MATCH (ontoloasx:Ontology {iri: 'http://ontoloasx.org/ontoloasx'}),
+      (gufo:Ontology {iri: 'http://purl.org/nemo/gufo#'})
+MERGE (ontoloasx)-[:IMPORTS]->(gufo);
 
-CREATE CONSTRAINT class_uri_unique IF NOT EXISTS
-FOR (n:OntologicalClass) REQUIRE n.uri IS UNIQUE;
-
-CREATE CONSTRAINT property_uri_unique IF NOT EXISTS
-FOR (n:OntologicalProperty) REQUIRE n.uri IS UNIQUE;
-
-CREATE CONSTRAINT gufo_uri_unique IF NOT EXISTS
-FOR (n:GUFOTerm) REQUIRE n.uri IS UNIQUE;
-
-// Ontology
-MERGE (onto:Ontology {uri: 'http://ontoloasx.org/ontoloasx'})
-SET onto.name = 'OntoLOASx',
-    onto.type = 'owl:Ontology',
-    onto.imports = 'http://purl.org/nemo/gufo#',
-    onto.ontology = 'OntoLOASx';
-
-// Referenced gUFO and XSD types
 UNWIND [
-  {curie:'gufo:SituationType', uri:'http://purl.org/nemo/gufo#SituationType', kind:'gUFO metaclass'},
-  {curie:'gufo:Kind', uri:'http://purl.org/nemo/gufo#Kind', kind:'gUFO metaclass'},
-  {curie:'gufo:Situation', uri:'http://purl.org/nemo/gufo#Situation', kind:'gUFO class'},
-  {curie:'gufo:FunctionalComplex', uri:'http://purl.org/nemo/gufo#FunctionalComplex', kind:'gUFO class'},
-  {curie:'gufo:IntrinsicMode', uri:'http://purl.org/nemo/gufo#IntrinsicMode', kind:'gUFO class'},
-  {curie:'gufo:hasQualityValue', uri:'http://purl.org/nemo/gufo#hasQualityValue', kind:'gUFO property'},
-  {curie:'xsd:string', uri:'http://www.w3.org/2001/XMLSchema#string', kind:'XSD datatype'},
-  {curie:'xsd:boolean', uri:'http://www.w3.org/2001/XMLSchema#boolean', kind:'XSD datatype'}
-] AS t
-MERGE (term:GUFOTerm {uri: t.uri})
-SET term.curie = t.curie,
-    term.kind = t.kind,
-    term.ontology = 'OntoLOASx';
+  {iri: 'http://purl.org/nemo/gufo#Situation', name: 'Situation'},
+  {iri: 'http://purl.org/nemo/gufo#IntrinsicMode', name: 'IntrinsicMode'},
+  {iri: 'http://purl.org/nemo/gufo#FunctionalComplex', name: 'FunctionalComplex'},
+  {iri: 'http://purl.org/nemo/gufo#SituationType', name: 'SituationType'},
+  {iri: 'http://purl.org/nemo/gufo#Kind', name: 'Kind'}
+] AS row
+MATCH (gufo:Ontology {iri: 'http://purl.org/nemo/gufo#'})
+MERGE (class:OntologyClass:FoundationalClass {iri: row.iri})
+SET class.name = row.name,
+    class.label = row.name,
+    class.namespace = 'http://purl.org/nemo/gufo#'
+MERGE (gufo)-[:DECLARES_CLASS]->(class);
 
-// Classes
 UNWIND [
-  {
-    name: "ResearchGap",
-    uri: "http://ontoloasx.org/ontoloasx#ResearchGap",
-    label: "ResearchGap",
-    gufoType: "gufo:SituationType",
-    superClass: "gufo:Situation"
-  },
-  {
-    name: "Problem",
-    uri: "http://ontoloasx.org/ontoloasx#Problem",
-    label: "Problem",
-    gufoType: "gufo:SituationType",
-    superClass: "gufo:Situation"
-  },
-  {
-    name: "ResearchQuestion",
-    uri: "http://ontoloasx.org/ontoloasx#ResearchQuestion",
-    label: "ResearchQuestion",
-    gufoType: "gufo:Kind",
-    superClass: "gufo:FunctionalComplex"
-  },
-  {
-    name: "Limitation",
-    uri: "http://ontoloasx.org/ontoloasx#Limitation",
-    label: "Limitation",
-    gufoType: "gufo:Kind",
-    superClass: "gufo:IntrinsicMode"
-  },
-  {
-    name: "Study",
-    uri: "http://ontoloasx.org/ontoloasx#Study",
-    label: "Study",
-    gufoType: "gufo:Kind",
-    superClass: "gufo:FunctionalComplex"
-  },
-  {
-    name: "Objective",
-    uri: "http://ontoloasx.org/ontoloasx#Objective",
-    label: "Objective",
-    gufoType: "gufo:Kind",
-    superClass: "gufo:IntrinsicMode"
-  },
-  {
-    name: "Context",
-    uri: "http://ontoloasx.org/ontoloasx#Context",
-    label: "Context",
-    gufoType: "gufo:SituationType",
-    superClass: "gufo:Situation"
-  },
-  {
-    name: "Solution",
-    uri: "http://ontoloasx.org/ontoloasx#Solution",
-    label: "Solution",
-    gufoType: "gufo:Kind",
-    superClass: "gufo:FunctionalComplex"
-  },
-  {
-    name: "SolutionElement",
-    uri: "http://ontoloasx.org/ontoloasx#SolutionElement",
-    label: "SolutionElement",
-    gufoType: "gufo:Kind",
-    superClass: "gufo:FunctionalComplex"
-  }
-] AS c
-MATCH (onto:Ontology {uri: 'http://ontoloasx.org/ontoloasx'})
-MATCH (gufoType:GUFOTerm {curie: c.gufoType})
-MATCH (superClass:GUFOTerm {curie: c.superClass})
-MERGE (cls:OntologicalClass:OWLClass:NamedIndividual {uri: c.uri})
-SET cls.name = c.name,
-    cls.label = c.label,
-    cls.language = 'en',
-    cls.rdfType = ['owl:Class', c.gufoType, 'owl:NamedIndividual'],
-    cls.subClassOf = c.superClass,
-    cls.gufoStereotype = c.gufoType,
-    cls.ontology = 'OntoLOASx'
-MERGE (onto)-[:DECLARES]->(cls)
-MERGE (cls)-[:RDF_TYPE]->(gufoType)
-MERGE (cls)-[:SUBCLASS_OF]->(superClass);
+  {iri: 'http://www.w3.org/2001/XMLSchema#string', name: 'string'},
+  {iri: 'http://www.w3.org/2001/XMLSchema#boolean', name: 'boolean'}
+] AS row
+MERGE (datatype:Datatype {iri: row.iri})
+SET datatype.name = row.name,
+    datatype.namespace = 'http://www.w3.org/2001/XMLSchema#';
 
-// Data properties
+MERGE (topDataProperty:DataProperty:ExternalProperty {iri: 'http://www.w3.org/2002/07/owl#topDataProperty'})
+SET topDataProperty.name = 'topDataProperty',
+    topDataProperty.label = 'topDataProperty',
+    topDataProperty.namespace = 'http://www.w3.org/2002/07/owl#';
+
 UNWIND [
-  {
-    label: "description",
-    uri: "researchGap:description",
-    domain: "ResearchGap",
-    range: "xsd:string",
-    subPropertyOf: "gufo:hasQualityValue"
-  },
-  {
-    label: "description",
-    uri: "problem:description",
-    domain: "Problem",
-    range: "xsd:string",
-    subPropertyOf: "gufo:hasQualityValue"
-  },
-  {
-    label: "description",
-    uri: "researchQuestion:description",
-    domain: "ResearchQuestion",
-    range: "xsd:string",
-    subPropertyOf: "gufo:hasQualityValue"
-  },
-  {
-    label: "description",
-    uri: "limitation:description",
-    domain: "Limitation",
-    range: "xsd:string",
-    subPropertyOf: "gufo:hasQualityValue"
-  },
-  {
-    label: "addedInReview",
-    uri: "limitation:addedInReview",
-    domain: "Limitation",
-    range: "xsd:boolean",
-    subPropertyOf: "gufo:hasQualityValue"
-  },
-  {
-    label: "title",
-    uri: "study:title",
-    domain: "Study",
-    range: "xsd:string",
-    subPropertyOf: "gufo:hasQualityValue"
-  },
-  {
-    label: "description",
-    uri: "objective:description",
-    domain: "Objective",
-    range: "xsd:string",
-    subPropertyOf: "gufo:hasQualityValue"
-  },
-  {
-    label: "description",
-    uri: "context:description",
-    domain: "Context",
-    range: "xsd:string",
-    subPropertyOf: "gufo:hasQualityValue"
-  },
-  {
-    label: "description",
-    uri: "solutionElement:description",
-    domain: "SolutionElement",
-    range: "xsd:string",
-    subPropertyOf: "gufo:hasQualityValue"
-  },
-  {
-    label: "isOriginal",
-    uri: "solutionElement:isOriginal",
-    domain: "SolutionElement",
-    range: "xsd:boolean",
-    subPropertyOf: "gufo:hasQualityValue"
-  },
-  {
-    label: "isQuantitative",
-    uri: "solutionElement:isQuantitative",
-    domain: "SolutionElement",
-    range: "xsd:boolean",
-    subPropertyOf: "gufo:hasQualityValue"
-  },
-  {
-    label: "number",
-    uri: "solutionElement:number",
-    domain: "SolutionElement",
-    range: "xsd:string",
-    subPropertyOf: "gufo:hasQualityValue"
-  }
-] AS p
-MATCH (onto:Ontology {uri: 'http://ontoloasx.org/ontoloasx'})
-MATCH (domain:OntologicalClass {name: p.domain})
-MATCH (range:GUFOTerm {curie: p.range})
-MATCH (superProperty:GUFOTerm {curie: p.subPropertyOf})
-MERGE (prop:OntologicalProperty:DatatypeProperty {uri: p.uri})
-SET prop.name = p.label,
-    prop.label = p.label,
-    prop.language = 'en',
-    prop.rdfType = 'owl:DatatypeProperty',
-    prop.range = p.range,
-    prop.subPropertyOf = p.subPropertyOf,
-    prop.ontology = 'OntoLOASx'
-MERGE (onto)-[:DECLARES]->(prop)
-MERGE (prop)-[:DOMAIN]->(domain)
-MERGE (prop)-[:RANGE]->(range)
-MERGE (prop)-[:SUBPROPERTY_OF]->(superProperty);
+  {iri: 'http://ontoloasx.org/ontoloasx#Context', name: 'Context', supertypeIri: 'http://purl.org/nemo/gufo#Situation', metatypeIri: 'http://purl.org/nemo/gufo#SituationType'},
+  {iri: 'http://ontoloasx.org/ontoloasx#Limitation', name: 'Limitation', supertypeIri: 'http://purl.org/nemo/gufo#IntrinsicMode', metatypeIri: 'http://purl.org/nemo/gufo#Kind'},
+  {iri: 'http://ontoloasx.org/ontoloasx#Objective', name: 'Objective', supertypeIri: 'http://purl.org/nemo/gufo#IntrinsicMode', metatypeIri: 'http://purl.org/nemo/gufo#Kind'},
+  {iri: 'http://ontoloasx.org/ontoloasx#Problem', name: 'Problem', supertypeIri: 'http://purl.org/nemo/gufo#Situation', metatypeIri: 'http://purl.org/nemo/gufo#SituationType'},
+  {iri: 'http://ontoloasx.org/ontoloasx#ResearchGap', name: 'ResearchGap', supertypeIri: 'http://purl.org/nemo/gufo#Situation', metatypeIri: 'http://purl.org/nemo/gufo#SituationType'},
+  {iri: 'http://ontoloasx.org/ontoloasx#ResearchQuestion', name: 'ResearchQuestion', supertypeIri: 'http://purl.org/nemo/gufo#FunctionalComplex', metatypeIri: 'http://purl.org/nemo/gufo#Kind'},
+  {iri: 'http://ontoloasx.org/ontoloasx#Solution', name: 'Solution', supertypeIri: 'http://purl.org/nemo/gufo#FunctionalComplex', metatypeIri: 'http://purl.org/nemo/gufo#Kind'},
+  {iri: 'http://ontoloasx.org/ontoloasx#SolutionElement', name: 'SolutionElement', supertypeIri: 'http://purl.org/nemo/gufo#FunctionalComplex', metatypeIri: 'http://purl.org/nemo/gufo#Kind'},
+  {iri: 'http://ontoloasx.org/ontoloasx#Study', name: 'Study', supertypeIri: 'http://purl.org/nemo/gufo#FunctionalComplex', metatypeIri: 'http://purl.org/nemo/gufo#Kind'}
+] AS row
+MATCH (ontoloasx:Ontology {iri: 'http://ontoloasx.org/ontoloasx'}),
+      (supertype:OntologyClass {iri: row.supertypeIri}),
+      (metatype:OntologyClass {iri: row.metatypeIri})
+MERGE (class:OntologyClass:DomainClass {iri: row.iri})
+SET class.name = row.name,
+    class.label = row.name,
+    class.neo4jLabel = row.name,
+    class.namespace = 'http://ontoloasx.org/ontoloasx#',
+    class.language = 'en'
+MERGE (ontoloasx)-[:DECLARES_CLASS]->(class)
+MERGE (class)-[:SUBCLASS_OF]->(supertype)
+MERGE (class)-[:INSTANTIATES_METATYPE]->(metatype);
 
-// Object properties
 UNWIND [
-  {
-    name: "investigates",
-    uri: "http://ontoloasx.org/ontoloasx#investigates",
-    domain: "ResearchQuestion",
-    range: "Problem"
-  },
-  {
-    name: "proposes",
-    uri: "http://ontoloasx.org/ontoloasx#proposes",
-    domain: "Study",
-    range: "Solution"
-  },
-  {
-    name: "addresses",
-    uri: "http://ontoloasx.org/ontoloasx#addresses",
-    domain: "Solution",
-    range: "Problem"
-  },
-  {
-    name: "appliesTo",
-    uri: "http://ontoloasx.org/ontoloasx#appliesTo",
-    domain: "Solution",
-    range: "Context"
-  },
-  {
-    name: "hasObjective",
-    uri: "http://ontoloasx.org/ontoloasx#hasObjective",
-    domain: "Study",
-    range: "Objective"
-  },
-  {
-    name: "identifies",
-    uri: "http://ontoloasx.org/ontoloasx#identifies",
-    domain: "Study",
-    range: "ResearchGap"
-  },
-  {
-    name: "hasLimitation",
-    uri: "http://ontoloasx.org/ontoloasx#hasLimitation",
-    domain: "Solution",
-    range: "Limitation"
-  },
-  {
-    name: "hasElement",
-    uri: "http://ontoloasx.org/ontoloasx#hasElement",
-    domain: "Solution",
-    range: "SolutionElement"
-  }
-] AS p
-MATCH (onto:Ontology {uri: 'http://ontoloasx.org/ontoloasx'})
-MATCH (domain:OntologicalClass {name: p.domain})
-MATCH (range:OntologicalClass {name: p.range})
-MERGE (prop:OntologicalProperty:ObjectProperty {uri: p.uri})
-SET prop.name = p.name,
-    prop.label = p.name,
-    prop.language = 'en',
-    prop.rdfType = 'owl:ObjectProperty',
-    prop.ontology = 'OntoLOASx'
-MERGE (onto)-[:DECLARES]->(prop)
-MERGE (prop)-[:DOMAIN]->(domain)
-MERGE (prop)-[:RANGE]->(range);
+  {iri: 'http://ontoloasx.org/ontoloasx#addresses', name: 'addresses', domainIri: 'http://ontoloasx.org/ontoloasx#Solution', rangeIri: 'http://ontoloasx.org/ontoloasx#Problem', functional: false, inverseFunctional: false, asymmetric: true, irreflexive: true},
+  {iri: 'http://ontoloasx.org/ontoloasx#appliesTo', name: 'appliesTo', domainIri: 'http://ontoloasx.org/ontoloasx#Solution', rangeIri: 'http://ontoloasx.org/ontoloasx#Context', functional: false, inverseFunctional: false, asymmetric: true, irreflexive: true},
+  {iri: 'http://ontoloasx.org/ontoloasx#hasElement', name: 'hasElement', domainIri: 'http://ontoloasx.org/ontoloasx#Solution', rangeIri: 'http://ontoloasx.org/ontoloasx#SolutionElement', functional: false, inverseFunctional: false, asymmetric: true, irreflexive: true},
+  {iri: 'http://ontoloasx.org/ontoloasx#hasLimitation', name: 'hasLimitation', domainIri: 'http://ontoloasx.org/ontoloasx#Solution', rangeIri: 'http://ontoloasx.org/ontoloasx#Limitation', functional: false, inverseFunctional: true, asymmetric: true, irreflexive: true},
+  {iri: 'http://ontoloasx.org/ontoloasx#hasObjective', name: 'hasObjective', domainIri: 'http://ontoloasx.org/ontoloasx#Study', rangeIri: 'http://ontoloasx.org/ontoloasx#Objective', functional: false, inverseFunctional: true, asymmetric: true, irreflexive: true},
+  {iri: 'http://ontoloasx.org/ontoloasx#identifies', name: 'identifies', domainIri: 'http://ontoloasx.org/ontoloasx#Study', rangeIri: 'http://ontoloasx.org/ontoloasx#ResearchGap', functional: false, inverseFunctional: false, asymmetric: true, irreflexive: true},
+  {iri: 'http://ontoloasx.org/ontoloasx#investigates', name: 'investigates', domainIri: 'http://ontoloasx.org/ontoloasx#ResearchQuestion', rangeIri: 'http://ontoloasx.org/ontoloasx#Problem', functional: true, inverseFunctional: false, asymmetric: true, irreflexive: true},
+  {iri: 'http://ontoloasx.org/ontoloasx#proposes', name: 'proposes', domainIri: 'http://ontoloasx.org/ontoloasx#Study', rangeIri: 'http://ontoloasx.org/ontoloasx#Solution', functional: false, inverseFunctional: true, asymmetric: true, irreflexive: true}
+] AS row
+MATCH (ontoloasx:Ontology {iri: 'http://ontoloasx.org/ontoloasx'}),
+      (domain:OntologyClass {iri: row.domainIri}),
+      (range:OntologyClass {iri: row.rangeIri})
+MERGE (property:ObjectProperty {iri: row.iri})
+SET property.name = row.name,
+    property.label = row.name,
+    property.relationshipType = row.name,
+    property.namespace = 'http://ontoloasx.org/ontoloasx#',
+    property.language = 'en',
+    property.functional = row.functional,
+    property.inverseFunctional = row.inverseFunctional,
+    property.asymmetric = row.asymmetric,
+    property.irreflexive = row.irreflexive
+MERGE (ontoloasx)-[:DECLARES_OBJECT_PROPERTY]->(property)
+MERGE (property)-[:DOMAIN]->(domain)
+MERGE (property)-[:RANGE]->(range);
 
-// Semantic relations
-MATCH (rq:OntologicalClass {name:'ResearchQuestion'}), (p:OntologicalClass {name:'Problem'})
-MERGE (rq)-[:INVESTIGATES_SCHEMA {propertyUri:'http://ontoloasx.org/ontoloasx#investigates', label:'investigates'}]->(p);
+UNWIND [
+  {iri: 'http://ontoloasx.org/ontoloasx#addedInReview', name: 'addedInReview', rangeIri: 'http://www.w3.org/2001/XMLSchema#boolean'},
+  {iri: 'http://ontoloasx.org/ontoloasx#description', name: 'description', rangeIri: 'http://www.w3.org/2001/XMLSchema#string'},
+  {iri: 'http://ontoloasx.org/ontoloasx#isOriginal', name: 'isOriginal', rangeIri: 'http://www.w3.org/2001/XMLSchema#boolean'},
+  {iri: 'http://ontoloasx.org/ontoloasx#isQuantitative', name: 'isQuantitative', rangeIri: 'http://www.w3.org/2001/XMLSchema#boolean'},
+  {iri: 'http://ontoloasx.org/ontoloasx#number', name: 'number', rangeIri: 'http://www.w3.org/2001/XMLSchema#string'},
+  {iri: 'http://ontoloasx.org/ontoloasx#title', name: 'title', rangeIri: 'http://www.w3.org/2001/XMLSchema#string'}
+] AS row
+MATCH (ontoloasx:Ontology {iri: 'http://ontoloasx.org/ontoloasx'}),
+      (datatype:Datatype {iri: row.rangeIri}),
+      (topDataProperty:DataProperty {iri: 'http://www.w3.org/2002/07/owl#topDataProperty'})
+MERGE (property:DataProperty:DomainDataProperty {iri: row.iri})
+SET property.name = row.name,
+    property.label = row.name,
+    property.propertyKey = row.name,
+    property.namespace = 'http://ontoloasx.org/ontoloasx#',
+    property.language = 'en',
+    property.functional = true
+MERGE (ontoloasx)-[:DECLARES_DATA_PROPERTY]->(property)
+MERGE (property)-[:SUBPROPERTY_OF]->(topDataProperty)
+MERGE (property)-[:RANGE]->(datatype);
 
-MATCH (s:OntologicalClass {name:'Study'}), (sol:OntologicalClass {name:'Solution'})
-MERGE (s)-[:PROPOSES_SCHEMA {propertyUri:'http://ontoloasx.org/ontoloasx#proposes', label:'proposes'}]->(sol);
+UNWIND [
+  {id: 'Context_description_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#Context', propertyIri: 'http://ontoloasx.org/ontoloasx#description', datatypeIri: 'http://www.w3.org/2001/XMLSchema#string'},
+  {id: 'Limitation_addedInReview_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#Limitation', propertyIri: 'http://ontoloasx.org/ontoloasx#addedInReview', datatypeIri: 'http://www.w3.org/2001/XMLSchema#boolean'},
+  {id: 'Limitation_description_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#Limitation', propertyIri: 'http://ontoloasx.org/ontoloasx#description', datatypeIri: 'http://www.w3.org/2001/XMLSchema#string'},
+  {id: 'Objective_description_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#Objective', propertyIri: 'http://ontoloasx.org/ontoloasx#description', datatypeIri: 'http://www.w3.org/2001/XMLSchema#string'},
+  {id: 'Problem_description_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#Problem', propertyIri: 'http://ontoloasx.org/ontoloasx#description', datatypeIri: 'http://www.w3.org/2001/XMLSchema#string'},
+  {id: 'ResearchGap_description_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#ResearchGap', propertyIri: 'http://ontoloasx.org/ontoloasx#description', datatypeIri: 'http://www.w3.org/2001/XMLSchema#string'},
+  {id: 'ResearchQuestion_description_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#ResearchQuestion', propertyIri: 'http://ontoloasx.org/ontoloasx#description', datatypeIri: 'http://www.w3.org/2001/XMLSchema#string'},
+  {id: 'SolutionElement_description_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#SolutionElement', propertyIri: 'http://ontoloasx.org/ontoloasx#description', datatypeIri: 'http://www.w3.org/2001/XMLSchema#string'},
+  {id: 'SolutionElement_isOriginal_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#SolutionElement', propertyIri: 'http://ontoloasx.org/ontoloasx#isOriginal', datatypeIri: 'http://www.w3.org/2001/XMLSchema#boolean'},
+  {id: 'SolutionElement_isQuantitative_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#SolutionElement', propertyIri: 'http://ontoloasx.org/ontoloasx#isQuantitative', datatypeIri: 'http://www.w3.org/2001/XMLSchema#boolean'},
+  {id: 'SolutionElement_number_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#SolutionElement', propertyIri: 'http://ontoloasx.org/ontoloasx#number', datatypeIri: 'http://www.w3.org/2001/XMLSchema#string'},
+  {id: 'Study_title_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#Study', propertyIri: 'http://ontoloasx.org/ontoloasx#title', datatypeIri: 'http://www.w3.org/2001/XMLSchema#string'}
+] AS row
+MATCH (owner:OntologyClass {iri: row.ownerIri}),
+      (property:DataProperty {iri: row.propertyIri}),
+      (datatype:Datatype {iri: row.datatypeIri})
+MERGE (restriction:OntologyRestriction {id: row.id})
+SET restriction.restrictionType = 'qualifiedCardinality',
+    restriction.cardinality = 1,
+    restriction.valueCategory = 'data'
+MERGE (owner)-[:HAS_RESTRICTION]->(restriction)
+MERGE (restriction)-[:ON_PROPERTY]->(property)
+MERGE (restriction)-[:ON_DATA_RANGE]->(datatype);
 
-MATCH (sol:OntologicalClass {name:'Solution'}), (p:OntologicalClass {name:'Problem'})
-MERGE (sol)-[:ADDRESSES_SCHEMA {propertyUri:'http://ontoloasx.org/ontoloasx#addresses', label:'addresses'}]->(p);
+UNWIND [
+  {id: 'ResearchQuestion_investigates_Problem_exactly_1', ownerIri: 'http://ontoloasx.org/ontoloasx#ResearchQuestion', propertyIri: 'http://ontoloasx.org/ontoloasx#investigates', valueClassIri: 'http://ontoloasx.org/ontoloasx#Problem'}
+] AS row
+MATCH (owner:OntologyClass {iri: row.ownerIri}),
+      (property:ObjectProperty {iri: row.propertyIri}),
+      (valueClass:OntologyClass {iri: row.valueClassIri})
+MERGE (restriction:OntologyRestriction {id: row.id})
+SET restriction.restrictionType = 'qualifiedCardinality',
+    restriction.cardinality = 1,
+    restriction.valueCategory = 'object'
+MERGE (owner)-[:HAS_RESTRICTION]->(restriction)
+MERGE (restriction)-[:ON_PROPERTY]->(property)
+MERGE (restriction)-[:ON_CLASS]->(valueClass);
 
-MATCH (sol:OntologicalClass {name:'Solution'}), (c:OntologicalClass {name:'Context'})
-MERGE (sol)-[:APPLIES_TO_SCHEMA {propertyUri:'http://ontoloasx.org/ontoloasx#appliesTo', label:'appliesTo'}]->(c);
+UNWIND [
+  {id: 'Solution_addresses_some_Problem', ownerIri: 'http://ontoloasx.org/ontoloasx#Solution', propertyIri: 'http://ontoloasx.org/ontoloasx#addresses', valueClassIri: 'http://ontoloasx.org/ontoloasx#Problem'},
+  {id: 'Solution_appliesTo_some_Context', ownerIri: 'http://ontoloasx.org/ontoloasx#Solution', propertyIri: 'http://ontoloasx.org/ontoloasx#appliesTo', valueClassIri: 'http://ontoloasx.org/ontoloasx#Context'},
+  {id: 'Solution_hasElement_some_SolutionElement', ownerIri: 'http://ontoloasx.org/ontoloasx#Solution', propertyIri: 'http://ontoloasx.org/ontoloasx#hasElement', valueClassIri: 'http://ontoloasx.org/ontoloasx#SolutionElement'},
+  {id: 'Study_hasObjective_some_Objective', ownerIri: 'http://ontoloasx.org/ontoloasx#Study', propertyIri: 'http://ontoloasx.org/ontoloasx#hasObjective', valueClassIri: 'http://ontoloasx.org/ontoloasx#Objective'},
+  {id: 'Study_proposes_some_Solution', ownerIri: 'http://ontoloasx.org/ontoloasx#Study', propertyIri: 'http://ontoloasx.org/ontoloasx#proposes', valueClassIri: 'http://ontoloasx.org/ontoloasx#Solution'}
+] AS row
+MATCH (owner:OntologyClass {iri: row.ownerIri}),
+      (property:ObjectProperty {iri: row.propertyIri}),
+      (valueClass:OntologyClass {iri: row.valueClassIri})
+MERGE (restriction:OntologyRestriction {id: row.id})
+SET restriction.restrictionType = 'someValuesFrom',
+    restriction.minimumCardinality = 1,
+    restriction.valueCategory = 'object'
+MERGE (owner)-[:HAS_RESTRICTION]->(restriction)
+MERGE (restriction)-[:ON_PROPERTY]->(property)
+MERGE (restriction)-[:SOME_VALUES_FROM]->(valueClass);
 
-MATCH (s:OntologicalClass {name:'Study'}), (o:OntologicalClass {name:'Objective'})
-MERGE (s)-[:HAS_OBJECTIVE_SCHEMA {propertyUri:'http://ontoloasx.org/ontoloasx#hasObjective', label:'hasObjective'}]->(o);
-
-MATCH (s:OntologicalClass {name:'Study'}), (rg:OntologicalClass {name:'ResearchGap'})
-MERGE (s)-[:IDENTIFIES_SCHEMA {propertyUri:'http://ontoloasx.org/ontoloasx#identifies', label:'identifies'}]->(rg);
-
-MATCH (sol:OntologicalClass {name:'Solution'}), (l:OntologicalClass {name:'Limitation'})
-MERGE (sol)-[:HAS_LIMITATION_SCHEMA {propertyUri:'http://ontoloasx.org/ontoloasx#hasLimitation', label:'hasLimitation'}]->(l);
-
-MATCH (sol:OntologicalClass {name:'Solution'}), (se:OntologicalClass {name:'SolutionElement'})
-MERGE (sol)-[:HAS_ELEMENT_SCHEMA {propertyUri:'http://ontoloasx.org/ontoloasx#hasElement', label:'hasElement'}]->(se);
-
-// Verification query
-MATCH (onto:Ontology {uri:'http://ontoloasx.org/ontoloasx'})-[:DECLARES]->(n)
-RETURN labels(n) AS labels, n.name AS name, n.uri AS uri
-ORDER BY labels, name;
+UNWIND [
+  {id: 'Solution_hasLimitation_only_Limitation', ownerIri: 'http://ontoloasx.org/ontoloasx#Solution', propertyIri: 'http://ontoloasx.org/ontoloasx#hasLimitation', valueClassIri: 'http://ontoloasx.org/ontoloasx#Limitation'},
+  {id: 'Study_identifies_only_ResearchGap', ownerIri: 'http://ontoloasx.org/ontoloasx#Study', propertyIri: 'http://ontoloasx.org/ontoloasx#identifies', valueClassIri: 'http://ontoloasx.org/ontoloasx#ResearchGap'}
+] AS row
+MATCH (owner:OntologyClass {iri: row.ownerIri}),
+      (property:ObjectProperty {iri: row.propertyIri}),
+      (valueClass:OntologyClass {iri: row.valueClassIri})
+MERGE (restriction:OntologyRestriction {id: row.id})
+SET restriction.restrictionType = 'allValuesFrom',
+    restriction.valueCategory = 'object'
+MERGE (owner)-[:HAS_RESTRICTION]->(restriction)
+MERGE (restriction)-[:ON_PROPERTY]->(property)
+MERGE (restriction)-[:ALL_VALUES_FROM]->(valueClass);
